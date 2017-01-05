@@ -76,7 +76,7 @@ namespace WPFTabTip
                 .ObserveOn(Scheduler.Default)
                 .Where(_ => IgnoreHardwareKeyboard == HardwareKeyboardIgnoreOptions.IgnoreAll || !HardwareKeyboard.IsConnectedAsync().Result)
                 .Where(tuple => tuple.Item2 == true)
-                .Do(_ => TabTip.OpenUndockedAndStartPoolingForClosedEvent())
+                .Do(_ => TabTip.OpenAndStartPoolingForClosedEvent())
                 .ObserveOnDispatcher()
                 .Subscribe(tuple => AnimationHelper.GetUIElementInToWorkAreaWithTabTipOpened(tuple.Item1));
         }
@@ -129,5 +129,7 @@ namespace WPFTabTip
 
             BindedUIElements.Add(typeof(T));
         }
+
+        public static PopupOptions PopupMode { get; set; }
     }
 }
